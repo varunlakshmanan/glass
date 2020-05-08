@@ -14,7 +14,7 @@ Using Glass as a starter template greatly minimizes the steps of model fitting, 
 ## How do I use Glass?
 Preprocess your dataset, and perform initial feature engineering. When preprocessing, impute missing data and encode categorical features as necessary. Ensure that your data has no null or NaN values. When feature engineering, create custom features and drop unnecessary columns based on feature importance. 
 
-Call the `predict()` function and pass in your preprocesssed `DataFrame` as well as the indicator string, either "regressor" or "classifier". (Use a regressor for numerical/continuous output and a classifier for categorical output.) `predict()` returns a `VotingClassifier` object that has been fitted. 
+To use Glass, call the `predict()` function and pass in your preprocesssed `DataFrame` as well as the indicator string, either "regressor" or "classifier". (Use a regressor for numerical/continuous output and a classifier for categorical output.) `predict()` returns a `VotingClassifier` object that has been fitted. 
 
 The specific parameters used in each step of the `predict()` function can be manually modified if needed prior to calling the function. (Eventually, this functionality will be accepted as optional parameters for `predict()`.) 
 
