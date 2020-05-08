@@ -1,5 +1,5 @@
 # What is Glass?
-Glass is a **Generalizable**, **Loss-minimizing**, **Automated** **Sklearn** **System**. Glass is a template for quickly building and deploying a high-performance model ensemble on non-image, non-NLP data. Ordinarily, machine learning requires five core steps:
+Glass is the **Generalizable**, **Loss-minimizing**, **Automated** **Sklearn** **System**. Glass is a template for quickly building and deploying a high-performance model ensemble on non-image, non-NLP data. Ordinarily, machine learning requires five core steps:
  * Data Preprocessing
  * Model Fitting
  * Hyperparameter Optimization
