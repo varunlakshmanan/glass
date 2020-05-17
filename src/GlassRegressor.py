@@ -2,13 +2,25 @@ from fit_models import fit_models
 from optimize_hyperparams import optimize_hyperparams
 from ensemble_models import ensemble_models
 
-class GlassRegressor():
+from sklearn.ensemble import VotingRegressor
+from sklearn.metrics import roc_auc_score
+
+ensemble = VotingRegressor()
+
+
+class GlassRegressor:
     def __init__(self):
         pass
 
-    def build_ensemble(input_data):
-        is_classifier = False
-        fit_models(input_data, is_classifier)
+    def fit(self, x, y):
+        is_classifier = True
+        global ensemble
+        ensemble = ensemble_models(optimize_hyperparams(fit_models(x, y, is_classifier)))
 
-    def properties(input_data):
-        print(1)
+    def predict(self, x):
+        y_predictions = ensemble.predict(x)
+        return y_predictions
+
+    def describe(self, y_test, y_preds):
+        auc = roc_auc_score(y_test, y_preds)
+        print("AUC: " + auc)
