@@ -12,12 +12,12 @@ class GlassClassifier:
     def __init__(self):
         pass
 
-    def fit(self, x, y):
+    def fit(self, x, y): # x_train, y_train
         is_classifier = True
         global ensemble
-        ensemble = ensemble_models(optimize_hyperparams(fit_models(x, y, is_classifier)))
+        ensemble = ensemble_models(optimize_hyperparams(fit_models(x, y, is_classifier), x, y), x, y)
 
-    def predict(self, x):
+    def predict(self, x): # x_test
         y_predictions = ensemble.predict(x)
         return y_predictions
 
