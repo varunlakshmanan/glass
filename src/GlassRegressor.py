@@ -6,7 +6,7 @@ global ensemble
 auc = -1
 
 
-class GlassClassifier:
+class GlassRegressor:
     def __init__(self):
         pass
 
