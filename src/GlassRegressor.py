@@ -11,7 +11,7 @@ class GlassRegressor:
         pass
 
     def fit(self, x_train, y_train, x_test, y_test):
-        is_classifier = True
+        is_classifier = False
         global ensemble
         ensemble = ensemble_models(optimize_hyperparams(build_models(is_classifier), x_train, y_train),
                                    x_train, y_train, x_test, y_test, is_classifier)
