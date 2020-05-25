@@ -57,12 +57,10 @@ from xgboost import XGBRegressor
 from lightgbm import LGBMClassifier
 from lightgbm import LGBMRegressor
 
-from varname import nameof
-
 estimators = []
 
 
-def fit_models(x, y, is_classifier):
+def fit_models(is_classifier):
     if is_classifier:
         decision_tree = DecisionTreeClassifier()
         random_forest = RandomForestClassifier()
@@ -87,7 +85,6 @@ def fit_models(x, y, is_classifier):
         xgb = XGBClassifier()
         lgbm = LGBMClassifier()
 
-        global estimators
         estimators = [decision_tree, random_forest, adaboost, bagging, extra_trees, gradient_boosting,
                       gaussian_process_classifier, logistic_regression, passive_aggressive, ridge, sgd, perceptron, svc,
                       nu_svc, linear_svc, k_neighbors, bernoulli_nb, gaussian_nb, linear_discriminant_analysis,
@@ -112,7 +109,6 @@ def fit_models(x, y, is_classifier):
         xgb = XGBRegressor()
         lgbm = LGBMRegressor()
 
-        global estimators
         estimators = [decision_tree, random_forest, adaboost, bagging, extra_trees, gradient_boosting,
                       gaussian_process_classifier, lasso, passive_aggressive, ridge, sgd, svr, nu_svr, linear_svr,
                       k_neighbors, xgb, lgbm]

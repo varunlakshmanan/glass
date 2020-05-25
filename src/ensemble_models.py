@@ -27,11 +27,10 @@ def ensemble_models(optimized_estimators, x_train, y_train, x_test, y_test, is_c
             voting_estimators.append(VotingClassifier(estimator_dict))
 
         best_estimator = VotingClassifier()
+        max_auc = -1
 
         # Find the voting classifier with the highest AUC
         for voting_estimator in voting_estimators:
-            max_auc = -1
-
             voting_estimator.fit(x_train, y_train)
             y_predictions = voting_estimator.predict(x_test)
             auc = roc_auc_score(y_test, y_predictions)
@@ -39,6 +38,7 @@ def ensemble_models(optimized_estimators, x_train, y_train, x_test, y_test, is_c
             if auc > max_auc:
                 best_estimator = voting_estimator
 
+        print("Highest AUC: " + max_auc)
         return best_estimator
 
     else:
@@ -52,11 +52,10 @@ def ensemble_models(optimized_estimators, x_train, y_train, x_test, y_test, is_c
             voting_estimators.append(VotingRegressor(estimator_dict))
 
         best_estimator = VotingRegressor()
+        max_auc = -1
 
         # Find the voting regressor with the highest AUC
         for voting_estimator in voting_estimators:
-            max_auc = -1
-
             voting_estimator.fit(x_train, y_train)
             y_predictions = voting_estimator.predict(x_test)
             auc = roc_auc_score(y_test, y_predictions)
@@ -64,8 +63,5 @@ def ensemble_models(optimized_estimators, x_train, y_train, x_test, y_test, is_c
             if auc > max_auc:
                 best_estimator = voting_estimator
 
-        return best_estimator
-
-
-def describe_ensemble():
-    print(1)
+        print("Highest AUC: " + max_auc)
+        return best_estimator, max_auc
