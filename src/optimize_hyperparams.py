@@ -2,7 +2,6 @@ import optuna
 from sklearn.model_selection import cross_val_score
 from varname import nameof
 
-
 def dt_objective(trial, x, y, estimator):
     max_depth = int(trial.suggest_discrete_uniform("max_depth", 1, 500, 1))
     min_samples_split = trial.suggest_discrete_uniform("min_samples_split", 0.005, 0.5, 0.005)
@@ -360,12 +359,7 @@ def lgbm_objective(trial, x, y, estimator):
 
 
 def optimize_hyperparams(estimators, x, y):
-    estimators_names = []
-    for estimator in estimators:
-        estimators_names.append(nameof(estimator))
-
-    optimized_estimators = {}
-    optimized_estimators.fromkeys(estimators_names)
+    optimized_estimators = []
 
     for estimator in estimators:
         if nameof(estimator) == "decision_tree":
@@ -373,132 +367,132 @@ def optimize_hyperparams(estimators, x, y):
             study.optimize(lambda trial: dt_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "random_forest":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: rf_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "adaboost":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: ab_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "bagging":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: bag_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "extra_trees":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: et_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "gradient_boosting":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: gb_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "gaussian_process_classifier":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: gpc_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "logistic_regression":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: lr_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "passive_aggressive":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: pa_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "ridge":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: ridge_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "sgd":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: sgd_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "perceptron":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: per_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "svc" or nameof(estimator) == "svr":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: sv_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "nu_svc" or nameof(estimator) == "nu_svr":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: nu_sv_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "linear_svc" or nameof(estimator) == "linear_svr":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: l_sv_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "k_neighbors":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: kn_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "bernoulli_nb":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: bnb_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "gaussian_nb":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: gnb_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "linear_discriminant_analysis":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: lda_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "quadratic_discriminant_analysis":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: qda_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "xgb":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: xgb_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
         elif nameof(estimator) == "lgbm":
             study = optuna.create_study(direction="maximize")
             study.optimize(lambda trial: lgbm_objective(trial, x, y, estimator), n_trials=100)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
-            optimized_estimators[nameof(estimator)] = estimator
+            optimized_estimators.append(estimator)
 
     return optimized_estimators
