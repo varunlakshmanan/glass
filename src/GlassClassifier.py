@@ -1,8 +1,6 @@
-from fit_models import fit_models
+from build_models import build_models
 from optimize_hyperparams import optimize_hyperparams
 from ensemble_models import ensemble_models
-
-from sklearn.ensemble import VotingClassifier
 
 global ensemble
 auc = -1
@@ -15,7 +13,7 @@ class GlassClassifier:
     def fit(self, x_train, y_train, x_test, y_test):
         is_classifier = True
         global ensemble
-        ensemble = ensemble_models(optimize_hyperparams(fit_models(is_classifier), x_train, y_train),
+        ensemble = ensemble_models(optimize_hyperparams(build_models(is_classifier), x_train, y_train),
                                    x_train, y_train, x_test, y_test, is_classifier)
 
     def predict(self, x_test):
