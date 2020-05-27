@@ -1,14 +1,13 @@
 import optuna
 from sklearn.model_selection import cross_val_score
-from varname import nameof
 
 def dt_objective(trial, x, y, estimator):
-    max_depth = int(trial.suggest_discrete_uniform("max_depth", 1, 500, 1))
+    max_depth = int(trial.suggest_int("max_depth", 1, 3, 8))
     min_samples_split = trial.suggest_discrete_uniform("min_samples_split", 0.005, 0.5, 0.005)
     min_samples_leaf = trial.suggest_discrete_uniform("min_samples_leaf", 0.001, 0.1, 0.001)
-    min_weight_fraction_leaf = trial.suggest_discrete_uniform("min_weight_fraction_leaf", 0.0, 1.0, 0.01)
+    min_weight_fraction_leaf = trial.suggest_discrete_uniform("min_weight_fraction_leaf", 0.0, 0.5, 0.05)
     max_features = trial.suggest_discrete_uniform("max_features", 0.01, 0.25, 0.01)
-    max_leaf_nodes = int(trial.suggest_discrete_uniform("max_leaf_nodes", 2, 512, 1))
+    max_leaf_nodes = int(trial.suggest_int("max_leaf_nodes", 64, 256, 512))
     params = {
         "max_depth": max_depth,
         "min_samples_split": min_samples_split,
@@ -24,13 +23,13 @@ def dt_objective(trial, x, y, estimator):
 
 
 def rf_objective(trial, x, y, estimator):
-    n_estimators = int(trial.suggest_discrete_uniform("n_estimators", 20, 4000, 1))
-    max_depth = int(trial.suggest_discrete_uniform("max_depth", 1, 500, 1))
+    n_estimators = int(trial.suggest_int("n_estimators", 50, 100, 200))
+    max_depth = int(trial.suggest_int("max_depth", 1, 3, 8))
     min_samples_split = trial.suggest_discrete_uniform("min_samples_split", 0.005, 0.5, 0.005)
     min_samples_leaf = trial.suggest_discrete_uniform("min_samples_leaf", 0.001, 0.1, 0.001)
-    min_weight_fraction_leaf = trial.suggest_discrete_uniform("min_weight_fraction_leaf", 0.0, 1.0, 0.01)
+    min_weight_fraction_leaf = trial.suggest_discrete_uniform("min_weight_fraction_leaf", 0.0, 0.5, 0.05)
     max_features = trial.suggest_discrete_uniform("max_features", 0.01, 0.25, 0.01)
-    max_leaf_nodes = int(trial.suggest_discrete_uniform("max_leaf_nodes", 2, 512, 1))
+    max_leaf_nodes = int(trial.suggest_int("max_leaf_nodes", 64, 256, 512))
     params = {
         "n_estimators": n_estimators,
         "max_depth": max_depth,
@@ -47,7 +46,7 @@ def rf_objective(trial, x, y, estimator):
 
 
 def ab_objective(trial, x, y, estimator):
-    n_estimators = int(trial.suggest_discrete_uniform("n_estimators", 10, 1000, 1))
+    n_estimators = int(trial.suggest_int("n_estimators", 50, 100, 200))
     learning_rate = trial.suggest_discrete_uniform("learning_rate", 0.001, 1, 0.0001)
     params = {
         "n_estimators": n_estimators,
@@ -60,8 +59,8 @@ def ab_objective(trial, x, y, estimator):
 
 
 def bag_objective(trial, x, y, estimator):
-    n_estimators = int(trial.suggest_discrete_uniform("n_estimators", 10, 1000, 1))
-    max_samples = trial.suggest_discrete_uniform(0.0, 1.0, 0.01)
+    n_estimators = int(trial.suggest_int("n_estimators", 50, 100, 200))
+    max_samples = trial.suggest_discrete_uniform("max_samples", 0.01, 1.0, 0.01)
     max_features = trial.suggest_discrete_uniform("max_features", 0.01, 0.25, 0.01)
     params = {
         "n_estimators": n_estimators,
@@ -75,13 +74,13 @@ def bag_objective(trial, x, y, estimator):
 
 
 def et_objective(trial, x, y, estimator):
-    n_estimators = int(trial.suggest_discrete_uniform("n_estimators", 20, 4000, 1))
-    max_depth = int(trial.suggest_discrete_uniform("max_depth", 1, 500, 1))
+    n_estimators = int(trial.suggest_int("n_estimators", 50, 100, 200))
+    max_depth = int(trial.suggest_int("max_depth", 1, 3, 8))
     min_samples_split = trial.suggest_discrete_uniform("min_samples_split", 0.005, 0.5, 0.005)
     min_samples_leaf = trial.suggest_discrete_uniform("min_samples_leaf", 0.001, 0.1, 0.001)
-    min_weight_fraction_leaf = trial.suggest_discrete_uniform("min_weight_fraction_leaf", 0.0, 1.0, 0.01)
+    min_weight_fraction_leaf = trial.suggest_discrete_uniform("min_weight_fraction_leaf", 0.0, 0.5, 0.05)
     max_features = trial.suggest_discrete_uniform("max_features", 0.01, 0.25, 0.01)
-    max_leaf_nodes = int(trial.suggest_discrete_uniform("max_leaf_nodes", 2, 512, 1))
+    max_leaf_nodes = int(trial.suggest_int("max_leaf_nodes", 64, 256, 512))
     params = {
         "n_estimators": n_estimators,
         "max_depth": max_depth,
@@ -98,17 +97,15 @@ def et_objective(trial, x, y, estimator):
 
 
 def gb_objective(trial, x, y, estimator):
-    loss = trial.suggest_categorical("loss", "ls", "lad", "huber")
-    learning_rate = int(trial.suggest_discrete_uniform("learning_rate", 0.001, 1, 0.0001))
-    n_estimators = int(trial.suggest_discrete_uniform("n_estimators", 20, 4000, 1))
-    min_samples_split = int(trial.suggest_discrete_uniform("min_samples_split", 0.005, 0.5, 0.005))
-    min_samples_leaf = int(trial.suggest_discrete_uniform("min_samples_leaf", 0.001, 0.1, 0.001))
-    min_weight_fraction_leaf = int(trial.suggest_discrete_uniform("min_weight_fraction_leaf", 0.0, 1.0, 0.01))
-    max_depth = int(trial.suggest_discrete_uniform("max_depth", 1, 500, 1))
-    max_features = int(trial.suggest_discrete_uniform("max_features", 0.01, 0.25, 0.01))
-    max_leaf_nodes = int(trial.suggest_discrete_uniform("max_leaf_nodes", 2, 512, 1))
+    learning_rate = trial.suggest_discrete_uniform("learning_rate", 0.001, 1, 0.0001)
+    n_estimators = int(trial.suggest_int("n_estimators", 50, 100, 200))
+    min_samples_split = trial.suggest_discrete_uniform("min_samples_split", 0.005, 0.5, 0.005)
+    min_samples_leaf = trial.suggest_discrete_uniform("min_samples_leaf", 0.001, 0.1, 0.001)
+    min_weight_fraction_leaf = trial.suggest_discrete_uniform("min_weight_fraction_leaf", 0.0, 0.5, 0.05)
+    max_depth = int(trial.suggest_int("max_depth", 1, 3, 8))
+    max_features = trial.suggest_discrete_uniform("max_features", 0.01, 0.25, 0.01)
+    max_leaf_nodes = int(trial.suggest_int("max_leaf_nodes", 64, 256, 512))
     params = {
-        "loss": loss,
         "learning_rate": learning_rate,
         "n_estimators": n_estimators,
         "min_samples_split": min_samples_split,
@@ -124,7 +121,7 @@ def gb_objective(trial, x, y, estimator):
     return accuracy
 
 
-def gpc_objective(trial, x, y, estimator):
+def gp_objective(trial, x, y, estimator):
     n_restarts_optimizer = int(trial.suggest_discrete_uniform("n_restarts_optimizer", 0, 30, 1))
     params = {
         "n_restarts_optimizer": n_restarts_optimizer
@@ -136,10 +133,10 @@ def gpc_objective(trial, x, y, estimator):
 
 
 def lr_objective(trial, x, y, estimator):
-    penalty = trial.suggest_categorical("penalty", "l2", "none")
+    penalty = trial.suggest_categorical("penalty", ["l2", "none"])
     tol = trial.suggest_discrete_uniform("tol", 10**(-6), 10**(-2), 10**(-4))
     c = trial.suggest_discrete_uniform("C", 0.01, 10, 0.1)
-    solver = trial.suggest_categorical("solver", "newton-cg", "lbfgs", "sag", "saga", "liblinear")
+    solver = trial.suggest_categorical("solver", ["newton-cg", "lbfgs", "sag", "saga"])
     params = {
         "penalty": penalty,
         "tol": tol,
@@ -171,12 +168,12 @@ def ridge_objective(trial, x, y, estimator):
     alpha = trial.suggest_discrete_uniform("alpha", 0.01, 10, 0.1)
     max_iter = int(trial.suggest_discrete_uniform("max_iter", 500, 2000, 1))
     tol = trial.suggest_discrete_uniform("tol", 10**(-5), 10**(-1), 10**(-3))
-    solver = trial.suggest_categorical("solver", "auto", "svd", "cholesky", "lsqr", "sparse_cg", "sag", "saga")
+    solver = trial.suggest_categorical("solver", ["auto", "svd", "cholesky", "lsqr", "sparse_cg", "sag", "saga"])
     params = {
+        "solver": solver,
         "alpha": alpha,
         "max_iter": max_iter,
         "tol": tol,
-        "solver": solver
     }
     estimator.set_params(**params)
     score = cross_val_score(estimator, x, y)
@@ -185,7 +182,7 @@ def ridge_objective(trial, x, y, estimator):
 
 
 def sgd_objective(trial, x, y, estimator):
-    penalty = trial.suggest_categorical("penalty", "l2", "l1", "elasticnet")
+    penalty = trial.suggest_categorical("penalty", ["l2", "l1"])
     alpha = trial.suggest_discrete_uniform("alpha", 0.00001, 0.01, 0.001)
     l1_ratio = trial.suggest_discrete_uniform("l1_ratio", 0.01, 0.3, 0.01)
     max_iter = int(trial.suggest_discrete_uniform("max_iter", 500, 2000, 1))
@@ -204,7 +201,7 @@ def sgd_objective(trial, x, y, estimator):
 
 
 def per_objective(trial, x, y, estimator):
-    penalty = trial.suggest_categorical("penalty", "l2", "l1", "elasticnet")
+    penalty = trial.suggest_categorical("penalty", ["l2", "l1", "elasticnet"])
     alpha = trial.suggest_discrete_uniform("alpha", 0.00001, 0.01, 0.001)
     max_iter = int(trial.suggest_discrete_uniform("max_iter", 500, 2000, 1))
     tol = trial.suggest_discrete_uniform("tol", 10**(-5), 10**(-1), 10**(-3))
@@ -221,10 +218,10 @@ def per_objective(trial, x, y, estimator):
 
 
 def sv_objective(trial, x, y, estimator):
-    c = trial.suggest_discrete_uniform("C", 0.01, 10, 0.1)
+    C = trial.suggest_discrete_uniform("C", 0.01, 10, 0.1)
     tol = trial.suggest_discrete_uniform("tol", 10**(-5), 10**(-1), 10**(-3))
     params = {
-        "C": c,
+        "C": C,
         "tol": tol,
     }
     estimator.set_params(**params)
@@ -247,11 +244,11 @@ def nu_sv_objective(trial, x, y, estimator):
 
 
 def l_sv_objective(trial, x, y, estimator):
-    c = trial.suggest_discrete_uniform("C", 0.01, 10, 0.1)
+    C = trial.suggest_discrete_uniform("C", 0.01, 10, 0.1)
     tol = trial.suggest_discrete_uniform("tol", 10**(-5), 10**(-1), 10**(-3))
     max_iter = int(trial.suggest_discrete_uniform("max_iter", 500, 2000, 1))
     params = {
-        "c": c,
+        "C": C,
         "tol": tol,
         "max_iter": max_iter
     }
@@ -262,10 +259,10 @@ def l_sv_objective(trial, x, y, estimator):
 
 
 def kn_objective(trial, x, y, estimator):
-    n_neighbors = int(trial.suggest_discrete_uniform("n_neighbors", 1, 25, 1))
-    weights = trial.suggest_categorical("weights", "uniform", "distance")
-    algorithm = trial.suggest_categorical("algorithm", "auto", "ball_tree", "kd_tree", "brute")
-    p = int(trial.suggest_discrete_uniform("max_iter", 1, 10, 1))
+    n_neighbors = int(trial.suggest_int("n_neighbors", 3, 5, 15))
+    weights = trial.suggest_categorical("weights", ["uniform", "distance"])
+    algorithm = trial.suggest_categorical("algorithm", ["auto", "ball_tree", "kd_tree", "brute"])
+    p = int(trial.suggest_discrete_uniform("p", 1, 10, 1))
     params = {
         "n_neighbors": n_neighbors,
         "weights": weights,
@@ -303,7 +300,7 @@ def gnb_objective(trial, x, y, estimator):
 
 
 def lda_objective(trial, x, y, estimator):
-    solver = trial.suggest_categorical("solver", "svd", "lsqr", "eigen")
+    solver = trial.suggest_categorical("solver", ["svd", "lsqr", "eigen"])
     params = {
         "solver": solver,
     }
@@ -314,7 +311,7 @@ def lda_objective(trial, x, y, estimator):
 
 
 def qda_objective(trial, x, y, estimator):
-    reg_param = trial.suggest_discrete_uniform(0.0, 1.0, 0.001)
+    reg_param = trial.suggest_discrete_uniform("reg_param", 0.0, 1.0, 0.001)
     params = {
         "reg_param": reg_param,
     }
@@ -325,9 +322,9 @@ def qda_objective(trial, x, y, estimator):
 
 
 def xgb_objective(trial, x, y, estimator):
-    n_estimators = int(trial.suggest_discrete_uniform(50, 1500, 1))
-    max_depth = int(trial.suggest_discrete_uniform(2, 2056, 1))
-    learning_rate = trial.suggest_discrete_uniform(0.0, 1.0, 0.001)
+    n_estimators = int(trial.suggest_int("n_estimators", 50, 100, 200))
+    max_depth = int(trial.suggest_int("max_depth", 2, 6, 14))
+    learning_rate = trial.suggest_discrete_uniform("learning_rate", 0.0, 1.0, 0.001)
     params = {
         "n_estimators": n_estimators,
         "max_depth": max_depth,
@@ -340,11 +337,11 @@ def xgb_objective(trial, x, y, estimator):
 
 
 def lgbm_objective(trial, x, y, estimator):
-    boosting_type = trial.suggest_categorical("boosting_type", "gbdt", "dart", "goss", "rf")
-    num_leaves = int(trial.suggest_discrete_uniform("num_leaves", 15, 511, 1))
-    max_depth = int(trial.suggest_discrete_uniform("max_depth", -1, 16, 1))
+    boosting_type = trial.suggest_categorical("boosting_type", ["gbdt", "dart", "goss"])
+    num_leaves = int(trial.suggest_int("num_leaves", 31, 63, 127))
+    max_depth = int(trial.suggest_int("max_depth", -1, 4, 8))
     learning_rate = trial.suggest_discrete_uniform("learning_rate", 0.001, 0.25, 0.001)
-    n_estimators = int(trial.suggest_discrete_uniform("n_estimators", 20, 4000, 1))
+    n_estimators = int(trial.suggest_int("n_estimators", 50, 100, 200))
     params = {
         "boosting_type": boosting_type,
         "num_leaves": num_leaves,
@@ -362,135 +359,135 @@ def optimize_hyperparams(estimators, x, y):
     optimized_estimators = []
 
     for estimator in estimators:
-        if nameof(estimator) == "decision_tree":
+        if "DecisionTree" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: dt_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: dt_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "random_forest":
+        elif "RandomForest" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: rf_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: rf_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "adaboost":
+        elif "AdaBoost" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: ab_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: ab_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "bagging":
+        elif "Bagging" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: bag_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: bag_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "extra_trees":
+        elif "ExtraTrees" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: et_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: et_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "gradient_boosting":
+        elif "GradientBoosting" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: gb_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: gb_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "gaussian_process_classifier":
+        elif "GaussianProcess" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: gpc_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: gp_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "logistic_regression":
+        elif "LogisticRegression" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: lr_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: lr_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "passive_aggressive":
+        elif "PassiveAggressive" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: pa_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: pa_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "ridge":
+        elif "Ridge" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: ridge_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: ridge_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "sgd":
+        elif "SGD" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: sgd_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: sgd_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "perceptron":
+        elif "Perceptron" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: per_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: per_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "svc" or nameof(estimator) == "svr":
+        elif "SVC()" == str(estimator) or "SVR()" == str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: sv_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: sv_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "nu_svc" or nameof(estimator) == "nu_svr":
+        elif "NuSVC" in str(estimator) or "NuSVR" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: nu_sv_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: nu_sv_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "linear_svc" or nameof(estimator) == "linear_svr":
+        elif "LinearSVC" in str(estimator) or "LinearSVR" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: l_sv_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: l_sv_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "k_neighbors":
+        elif "KNeighbors" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: kn_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: kn_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "bernoulli_nb":
+        elif "BernoulliNB" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: bnb_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: bnb_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "gaussian_nb":
+        elif "GaussianNB" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: gnb_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: gnb_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "linear_discriminant_analysis":
+        elif "LinearDiscriminantAnalysis" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: lda_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: lda_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "quadratic_discriminant_analysis":
+        elif "QuadraticDiscriminantAnalysis" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: qda_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: qda_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "xgb":
+        elif "XGB" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: xgb_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: xgb_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
-        elif nameof(estimator) == "lgbm":
+        elif "LGBM" in str(estimator):
             study = optuna.create_study(direction="maximize")
-            study.optimize(lambda trial: lgbm_objective(trial, x, y, estimator), n_trials=100)
+            study.optimize(lambda trial: lgbm_objective(trial, x, y, estimator), timeout=15)
             estimator.set_params(**study.best_params)
             estimator.fit(x, y)
             optimized_estimators.append(estimator)
