@@ -3,7 +3,7 @@ from sklearn.model_selection import cross_val_score
 import warnings
 
 warnings.filterwarnings("ignore", "Solver terminated early.*")
-warnings.filterwarnings("ignore", "ConvergenceWarning*")
+warnings.filterwarnings("ignore", "Maximum number of iteration reached before*")
 
 def dt_objective(trial, x, y, estimator):
     max_depth = int(trial.suggest_int("max_depth", 1, 15, 1))
@@ -252,7 +252,7 @@ def sgd_objective(trial, x, y, estimator):
     penalty = trial.suggest_categorical("penalty", ["l2", "l1"])
     alpha = trial.suggest_discrete_uniform("alpha", 0.00001, 0.01, 0.001)
     l1_ratio = trial.suggest_discrete_uniform("l1_ratio", 0.01, 0.3, 0.01)
-    max_iter = int(trial.suggest_discrete_uniform("max_iter", 500, 5000, 500))
+    max_iter = int(trial.suggest_discrete_uniform("max_iter", 500, 20000, 500))
     tol = trial.suggest_discrete_uniform("tol", 10**(-5), 10**(-1), 10**(-3))
     params = {
         "penalty": penalty,
