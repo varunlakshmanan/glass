@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import RobustScaler
 
-data_file_path = "D:/Documents/Projects/Glass/data.csv"
+data_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'examples', 'data.csv')
 data = pd.read_csv(data_file_path)
 
 scaler = RobustScaler()
