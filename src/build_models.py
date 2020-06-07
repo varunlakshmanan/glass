@@ -61,6 +61,8 @@ estimators = []
 
 
 def build_models(is_classifier):
+    print("Building models...")
+
     if is_classifier:
         decision_tree = DecisionTreeClassifier()
         random_forest = RandomForestClassifier()
@@ -112,7 +114,5 @@ def build_models(is_classifier):
         estimators = [decision_tree, random_forest, adaboost, bagging, extra_trees, gradient_boosting,
                       gaussian_process_regressor, lasso, passive_aggressive, ridge, sgd, svr, nu_svr, linear_svr,
                       k_neighbors, xgb, lgbm]
-        #for estimator in estimators:
-        #    print(str(estimator))
 
     return estimators

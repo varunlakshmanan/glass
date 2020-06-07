@@ -1,21 +1,14 @@
 from itertools import combinations
-from itertools import chain
 from sklearn.ensemble import VotingClassifier
 from sklearn.ensemble import VotingRegressor
 from sklearn.metrics import roc_auc_score
 
 best_voting_estimator = []
 
-'''
-Problems: 
-- change accuracy metric 
-- ConvergenceWarning: Liblinear failed to converge, increase the number of iterations.
-- Change suggest_int parameters in optimize_hyperparams file 
-- Fix other parameters
-'''
-
 
 def ensemble_models(optimized_estimators, x_train, y_train, x_test, y_test, is_classifier):
+    print("Finding the best model ensemble...")
+
     MAX_ENSEMBLES = 4
     all_estimator_combinations = []
 
@@ -45,7 +38,6 @@ def ensemble_models(optimized_estimators, x_train, y_train, x_test, y_test, is_c
             voting_estimator.fit(x_train, y_train)
             y_predictions = voting_estimator.predict(x_test)
             auc = roc_auc_score(y_test, y_predictions)
-
             if auc > max_auc:
                 best_voting_estimator = voting_estimator
 
@@ -65,10 +57,6 @@ def ensemble_models(optimized_estimators, x_train, y_train, x_test, y_test, is_c
 
         max_auc = -1
 
-        #for i in voting_estimators:
-        #    print(type(i).__name__)
-        #print("Done!")
-
         # Find the voting regressor with the highest AUC
         for voting_estimator in voting_estimators:
             voting_estimator.fit(x_train, y_train)
@@ -77,6 +65,6 @@ def ensemble_models(optimized_estimators, x_train, y_train, x_test, y_test, is_c
 
             if auc > max_auc:
                 best_voting_estimator = voting_estimator
+                max_auc = auc
 
-        print("Highest AUC: " + str(max_auc))
-        return best_voting_estimator, max_auc
+        return best_voting_estimator
