@@ -1,22 +1,23 @@
 from GlassRegressor import GlassRegressor
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import RobustScaler
 
-# Parse data into DataFrame
 data_file_path = "D:/Documents/Projects/Glass/data.csv"
 data = pd.read_csv(data_file_path)
 
-# Select features and target column
+scaler = RobustScaler()
+
 features = ['age', 'male', 'female', 'symptom_onset_hospitalization', 'mortality_rate', 'pop_density',
             'high_risk_travel']
 X = data[features]
 y = data.death
+scaled_X = scaler.fit_transform(X)
 
-# Perform train-test split
-X_train, X_test, y_train, y_test = train_test_split(X, y)
+# 70% training, 15% validation, 15% test
+X_train, X_test, y_train, y_test = train_test_split(scaled_X, y, test_size=0.3)
+X_train, X_validation, y_train, y_validation = train_test_split(X_train, y_train, test_size=(0.15/0.7))
 
-# Use GlassRegressor
 ensemble = GlassRegressor()
-ensemble.fit(X_train, y_train, X_test, y_test)
-ensemble.predict(X_test)
-ensemble.describe()
+ensemble.fit(X_train, y_train, X_validation, y_validation, timeout=15)
+ensemble.describe(X_test, y_test)
