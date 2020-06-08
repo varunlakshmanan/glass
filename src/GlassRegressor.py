@@ -10,11 +10,11 @@ class GlassRegressor:
     def __init__(self):
         pass
 
-    def fit(self, x_train, y_train, x_test, y_test, timeout=5):
+    def fit(self, x_train, y_train, x_test, y_test, timeout=5, max_in_ensemble=4):
         is_classifier = False
         global ensemble
         ensemble = ensemble_models(optimize_hyperparams(build_models(is_classifier), x_train, y_train, timeout),
-                                   x_train, y_train, x_test, y_test, is_classifier)
+                                   x_train, y_train, x_test, y_test, is_classifier, max_in_ensemble)
         return ensemble
 
     def predict(self, x_test):

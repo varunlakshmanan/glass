@@ -6,14 +6,12 @@ from sklearn.metrics import roc_auc_score
 best_voting_estimator = []
 
 
-def ensemble_models(optimized_estimators, x_train, y_train, x_test, y_test, is_classifier):
+def ensemble_models(optimized_estimators, x_train, y_train, x_test, y_test, is_classifier, max_in_ensemble):
     print("Finding the best model ensemble...")
-
-    MAX_ENSEMBLES = 4
     all_estimator_combinations = []
 
-    # Store combinations of length 2 to length MAX_ENSEMBLES of all estimators in a list
-    for i in reversed(range(2, MAX_ENSEMBLES + 1)):
+    # Store combinations of length 2 to length max_in_ensemble of all estimators in a list
+    for i in reversed(range(2, max_in_ensemble + 1)):
         temp_estimator_combinations = combinations(optimized_estimators, i)
         all_estimator_combinations.extend(temp_estimator_combinations)
 
