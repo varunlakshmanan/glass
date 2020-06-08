@@ -36,10 +36,11 @@ def ensemble_models(optimized_estimators, x_train, y_train, x_test, y_test, is_c
             voting_estimator.fit(x_train, y_train)
             y_predictions = voting_estimator.predict(x_test)
             auc = roc_auc_score(y_test, y_predictions)
+
             if auc > max_auc:
                 best_voting_estimator = voting_estimator
+                max_auc = auc
 
-        print("Highest AUC: " + str(max_auc))
         return best_voting_estimator
 
     else:
