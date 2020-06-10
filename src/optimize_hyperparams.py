@@ -28,7 +28,6 @@ def dt_objective(trial, x, y, estimator):
         score = cross_val_score(estimator, x, y, scoring="neg_mean_squared_error")
         accuracy = score.mean()
         return accuracy
-        return accuracy
     
     return accuracy
 
