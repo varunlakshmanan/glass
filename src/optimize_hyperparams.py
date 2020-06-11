@@ -5,6 +5,7 @@ import warnings
 warnings.filterwarnings("ignore", "Solver terminated early.*")
 warnings.filterwarnings("ignore", "Maximum number of iteration reached before*")
 
+# All objective functions define a single trial in Optuna for each type of estimator
 def dt_objective(trial, x, y, estimator):
     max_depth = int(trial.suggest_int("max_depth", 1, 15, 1))
     min_samples_split = trial.suggest_discrete_uniform("min_samples_split", 0.005, 0.5, 0.005)
@@ -496,7 +497,7 @@ def lgbm_objective(trial, x, y, estimator):
     
     return accuracy
 
-
+# Runs a study composed of the trials defined above for each estimator, and sets the best possible parameters for each estimator 
 def optimize_hyperparams(estimators, x, y, timeout):
     print("Optimizing hyperparameters...")
     optimized_estimators = []
