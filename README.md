@@ -11,7 +11,7 @@ Using Glass greatly minimizes the steps of model fitting, hyperparameter optimiz
 ## How do I use Glass?
 Preprocess your dataset, and perform initial feature engineering. When preprocessing, impute missing data and encode categorical features as necessary. Ensure that your data has no null or NaN values. When feature engineering, create custom features and drop unnecessary columns based on feature importance. 
 
-After that, follow the instructions in the [Documentation](https://github.com/varunlakshmanan/glass/wiki/Documentation) to get started. 
+After that, follow the instructions in the [Documentation](https://github.com/varunlakshmanan/glass/wiki/Documentation) to get started. Take a look at the [example provided](https://github.com/varunlakshmanan/glass/blob/master/examples/example.py) for further usage guidelines.  
 
 ## How does Glass work? 
 Glass works by initializing many different scikit-learn models with varying architectures. It fits each of them to your input data while training, and hyperoptimizes the parameters of each model. The accuracy of every possible combination of these models is then ranked, and a fitted model ensemble is returned for your use. 
