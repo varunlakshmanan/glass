@@ -14,7 +14,7 @@ Preprocess your dataset, and perform initial feature engineering. When preproces
 After that, follow the instructions in the [Documentation](https://github.com/varunlakshmanan/glass/wiki/Documentation) to get started. Take a look at the [example provided](https://github.com/varunlakshmanan/glass/blob/master/examples/example.py) for further usage guidelines.  
 
 ## How does Glass work? 
-Glass works by initializing many different scikit-learn models with varying architectures. It fits each of them to your input data while training, and hyperoptimizes the parameters of each model. The accuracy of every possible ensembled combination of these models is then ranked, and a fitted model ensemble is returned for your use. 
+Glass works by initializing many different scikit-learn models with varying architectures. It fits each of them to your input data while training, and hyperoptimizes the parameters of each model. The accuracy of every possible ensembled combination of these models is then ranked, and the best fitted model ensemble is returned for your use. 
 
 ## What technologies does Glass use? 
 Languages:
