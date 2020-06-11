@@ -1,22 +1,20 @@
 ## What is Glass?
-Glass is the **Generalizable**, **Loss-minimizing**, **Automated** **Sklearn** **System**. Glass is a template for quickly building and deploying a high-performance model ensemble on non-image, non-NLP data. Ordinarily, machine learning requires five core steps:
+Glass is the **Generalizable**, **Loss-minimizing**, **Automated** **Sklearn** **System**. Glass is a template for quickly building and deploying a high-performance model ensemble on tabular and numerical data. It returns the best possible fitted model ensemble out of every possible combination of estimators whose parameters have been hyperoptimized. Ordinarily, machine learning requires five core steps:
  * Data Preprocessing
+ * Feature Engineering 
  * Model Fitting
  * Hyperparameter Optimization
- * Feature Engineering 
  * Model Evaluation and Ensembling 
  
-Using Glass as a starter template greatly minimizes the steps of model fitting, hyperparameter optimization, and model ensembling. Because it's built on top of native scikit-learn functions, it's immediately familiar to understand.
-
-## How does Glass work? 
-...
+Using Glass greatly minimizes the steps of model fitting, hyperparameter optimization, and model ensembling. Because it's built on top of native scikit-learn functions, it's immediately familiar to understand. You can deploy a high-performance model in under 5 lines of code. 
 
 ## How do I use Glass?
 Preprocess your dataset, and perform initial feature engineering. When preprocessing, impute missing data and encode categorical features as necessary. Ensure that your data has no null or NaN values. When feature engineering, create custom features and drop unnecessary columns based on feature importance. 
 
-To use Glass, call the `predict()` function and pass in your preprocesssed `DataFrame` as well as the indicator string, either "regressor" or "classifier". (Use a regressor for numerical/continuous output and a classifier for categorical output.) `predict()` returns a `VotingClassifier` object that has been fitted. 
+After that, follow the instructions in the [Documentation](https://github.com/varunlakshmanan/glass/wiki/Documentation) to get started. 
 
-The specific parameters used in each step of the `predict()` function can be manually modified if needed prior to calling the function. (Eventually, this functionality will be accepted as optional parameters for `predict()`.) 
+## How does Glass work? 
+Glass works by initializing many different scikit-learn models with varying architectures. It fits each of them to your input data while training, and hyperoptimizes the parameters of each model. The accuracy of every possible combination of these models is then ranked, and a fitted model ensemble is returned for your use. 
 
 ## What technologies does Glass use? 
 Languages:
