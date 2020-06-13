@@ -1,5 +1,5 @@
-## What is Glass-ML?
-Glass-ML is the **Generalizable**, **Loss-minimizing**, **Automated** **Sklearn** **System** for **Machine Learning**. Glass is a template for quickly building and deploying a high-performance model ensemble on tabular and numerical data. It returns the best possible fitted model ensemble out of every possible combination of estimators whose parameters have been hyperoptimized. Ordinarily, machine learning requires five core steps:
+## What is Glass?
+Glass is the **Generalizable**, **Loss-minimizing**, **Automated** **Sklearn** **System**. Glass is a template for quickly building and deploying a high-performance model ensemble on tabular and numerical data. It returns the best possible fitted model ensemble out of every possible combination of estimators whose parameters have been hyperoptimized. Ordinarily, machine learning requires five core steps:
  * Data Preprocessing
  * Feature Engineering 
  * Model Fitting
